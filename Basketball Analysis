@@ -1,0 +1,144 @@
+bos <- read.csv("https://raw.githubusercontent.com/bkrai/Sports-Analytics-With-R/main/2022BOS.csv")
+str(bos)
+head(bos, 3)
+tail(bos, 3)
+summary(bos)
+
+bos$slugMatchup <- as.factor(bos$slugMatchup)
+
+#Pie chart
+table(bos$slugOpponent)
+tab <- table(bos$slugOpponent)
+pie(tab, col = rainbow(30), main = "Boston Celtic Opponents")
+
+#Bar plot
+barplot(tab, col = rainbow(30), las = 1, main = "Boston Celtic Opponents")
+
+#Histogram
+hist(bos$pts, col = "green", main = "Points per player per game", xlab = "Points made")
+
+#Scatter plot
+plot(pts~minutes,bos)
+pairs(bos[, 30:35])
+
+library(psych)
+#Libraries
+pairs.panels(bos[,30:35])
+
+# Missing data
+mean(bos$pctFT, na.rm = TRUE)
+SD(bos$pctFT, na.rm = TRUE)
+bos[!complete.cases(bos),]
+dim(bos)
+new <- na.omit(bos)
+dim(new)
+
+#Read Data
+max(bos$numberGameTeamSeason)
+table(bos$numberGameTeamSeason, bos$outcomeGame)
+
+# SELCET
+my_data < - bos %>% select(23, 31:35, "pts")
+
+#FILTER
+my_data <- bos %>% select(23, 31:35, "pts") %>% 
+  filter(namePlayer == "Jayson Tatum")
+
+#ARRANGE
+my_data1 <- bos %>% select(23, 31:35, "pts") %>%
+  filter(pts > 40) %>% arrange(desc(fg3m))
+
+#SUMMARIZE
+bos %>% summarise(AVG = mean(pts), SD = sd(pts), COUNT = n())
+
+#SUMMARIZE AND GROUP
+bos %>% group_by(namePlayer) %>% summarise(AVG = mean(pts), SD = sd(pts), COUNT = n())
+bos %>% group_by(namePlayer) %>% summarise(EFG = (sum(fgm) + 0.5*sum(fg3m))/sum(fga), COUNT = n()) %>% arrange(desc(EFG)) %>% filter(COUNT > 10)
+bos %>% group_by(namePlayer) %>% summarise(FT = sum(ftm)) %>% arrange(desc(FT))
+
+#Jayson Tatum average ponits
+jayson_tatum <- bos %>% filter(namePlayer == "Jayson Tatum") %>% group_by(outcomeGame) %>% summarise(POINTS = mean(pts))
+
+library(ggplot2)
+library(dplyr)
+#Histogram
+bos %>% ggplot(aes((x = plusminus), fill = outcomeGame)) + 
+  geom_histogram(alpha = 0.5, color = "black") + 
+  facet_grid(vars(outcomeGame), vars(locationGame)) +
+  labs(
+    title = "Player Point Differential in a Win/Loss", "Season 2021-2022"
+  ) +
+  theme_bw()
+
+#Scatter PLot
+bos %>% ggplot(aes(x = minutes, y = pts, col = outcomeGame)) +
+  geom_point(col = "black", size = 2) +
+  geom_smooth(se = 0, method = "lm") +
+  theme_bw()
+
+#Bar Plot
+new %>% ggplot(aes(x = factor(namePlayer), y = (sum(fgm) + 0.5*sum(fg3m))/sum(fga), fill = namePlayer)) +
+  geom_col(show.legend = FALSE) +
+  coord_flip()
+
+#Boxplot
+bos %>% filter(minutes > 5) %>%
+  ggplot(aes(x = interaction(namePlayer, outcomeGame), y = pts, fill = outcomeGame)) +
+  geom_boxplot(show.legend = FALSE) +
+  coord_flip()
+
+library(ggExtra)
+#Marginal Plot
+p <- bos %>% ggplot(aes(x = minutes, y = pts, col = outcomeGame)) +
+  geom_point(col = "black", size = 2) +
+  geom_smooth(se = 0, method = "lm") +
+  theme_bw()
+ggMarginal(p, type = "histogram", fill = "pink")
+
+library(psych)
+library(corrplot)
+#Correlation matrix
+data <- bos %>% select(32:34, 37:40)
+cor(data)
+round(cor(data), digits = 3)
+corrplot(cor(data),
+         type = "lower",
+         method = "pie",
+         number.cex = 1.5)
+pairs.panels(data, method = "spearman")
+
+library(BasketballAnalyzeR)
+data(package = "BasketballAnalyzeR")
+
+#Tbox
+data("Tbox", package = "BasketballAnalyzeR")
+Tbox[1,]
+Tbox[2,]
+Tbox[1:4,]
+
+#Obox
+data("Obox", package = "BasketballAnalyzeR")
+Obox[1,]
+Obox[2,]
+Obox[1:4,]
+
+#Pace, Ratings & Four factors
+FF <- BasketballAnalyzeR::fourfactors(Tbox, Obox)
+plot(FF)
+
+library(corrplot)
+#Correlation
+corrplot(cor(FF[-1]), method = "number", type = "upper")
+
+#Team Success
+efg_dev <- FF$F1.Off - FF$F1.Def
+to_dev <- FF$F2.Def - FF$F2.Off
+rb_dev <- FF$F3.Off - FF$F3.Def
+ft_dev <- FF$F4.Def - FF$F4.Off
+wins <- Tbox$W
+data <- data.frame(wins, efg_dev, to_dev, rb_dev, ft_dev)
+corrplot(cor(data), method = "number", type = "upper")
+
+#Multiple Regression
+model <- lm(wins ~ ., data)
+summary(model)
