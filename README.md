@@ -75,7 +75,7 @@ I approach data problems by:
 
 ## 📫 Contact
 
-- **LinkedIn:** https://www.linkedin.com/in/hung-nguyen-94257937b/  
+- **LinkedIn:** https://www.linkedin.com/in/hung-khanh-nguyen-94257937b/?skipRedirect=true 
 - **Email:** henryng0408@gmail.com  
 
 ---
