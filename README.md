@@ -52,7 +52,7 @@ I’m a data analyst with a strong interest in turning raw data into meaningful 
 
 ---
 
-### 📊 Power BI Business Dashboard
+### 📊 Gloabl Economic Indicator
 - **Description:** Interactive Power BI dashboard highlighting patterns and performance metrics within a business dataset.  
 - **Objective:** Enable stakeholders to explore trends and monitor performance through dynamic visuals.  
 - **Key Work:**  
