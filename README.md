@@ -31,7 +31,7 @@ I’m a data analyst with a strong interest in turning raw data into meaningful 
 
 ---
 
-### 🚗 Uber Customer Analysis
+### 🚗 Uber Customer Analysis (Python)
 - **Description:** Analysis of Uber customer and ride data to understand usage patterns and customer behavior.  
 - **Objective:** Identify trends in ride requests, user activity, and regional performance.  
 - **Key Work:**  
@@ -42,7 +42,7 @@ I’m a data analyst with a strong interest in turning raw data into meaningful 
 
 ---
 
-### 🏡 Airbnb Market Analysis — Seattle (2016)
+### 🏡 Airbnb Market Analysis — Seattle 2016 (Tableau)
 - **Description:** Analysis of Airbnb listings and performance metrics in Seattle using historical data.  
 - **Objective:** Identify key hosts, pricing trends, and listing performance patterns.  
 - **Key Work:**  
@@ -52,7 +52,7 @@ I’m a data analyst with a strong interest in turning raw data into meaningful 
 
 ---
 
-### 📊 Gloabl Economic Indicator
+### 📊 Global Economic Indicator (Power BI)
 - **Description:** Interactive Power BI dashboard highlighting patterns and performance metrics within a business dataset.  
 - **Objective:** Enable stakeholders to explore trends and monitor performance through dynamic visuals.  
 - **Key Work:**  
